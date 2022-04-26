@@ -5,3 +5,4 @@ include ':components:module-swagger'
 
 include ':applications:app-ohlot'
 include ':applications:app-discovery'
+include ':applications:app-gateway'

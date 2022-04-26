@@ -2,8 +2,6 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher # Swagger에서 Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException 에러 해결용
-  profiles:
-    active: local
   datasource:
     driver-class-name: org.h2.Driver
     username: sa
@@ -15,3 +13,14 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+
+
+eureka:
+  instance:
+    instance-id: ohlot-microservice-instance
+    appname: ohlot-service
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
