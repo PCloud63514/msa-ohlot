@@ -13,10 +13,11 @@ import java.util.List;
 public class AuthInformation {
     private List<String> roles;
     private String dataSignKey;
-    private Long validity;
-    private Long refreshValidity;
+    private Long accessTokenValidity;
+    private Long refreshTokenValidity;
     private String accessToken;
     private String refreshToken;
     private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }
 

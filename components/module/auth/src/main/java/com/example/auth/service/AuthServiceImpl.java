@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -27,11 +28,12 @@ public class AuthServiceImpl implements AuthService {
         JwtToken jwtToken = jwtTokenProvider.generate(new JwtTokenGenerateRequest(request.getValidity(), request.getRefreshValidity()));
         String dataSignKey = uuidProvider.randomUUID().toString();
 
+        LocalDateTime now = localDateTimeProvider.now();
         AuthInformation authInformation = new AuthInformation(
                 request.getRoles(), dataSignKey,
                 request.getValidity(), request.getRefreshValidity(),
                 jwtToken.accessToken(), jwtToken.refreshToken(),
-                localDateTimeProvider.now());
+                now, now);
 
         ValueOperations<String, Object> opsValue = redisTemplate.opsForValue();
         opsValue.set(jwtToken.accessToken(), jwtToken.refreshToken());
@@ -63,6 +65,21 @@ public class AuthServiceImpl implements AuthService {
             return Optional.of(new TokenReIssueResponse(accessToken, refreshToken));
         }
 
-        return  Optional.of(new TokenReIssueResponse("ReIssueAccessToken", "ReIssueRefreshToken"));
+        JwtToken newJwtToken = jwtTokenProvider.generate(new JwtTokenGenerateRequest(authInformation.getAccessTokenValidity(), authInformation.getRefreshTokenValidity()));
+        opValue.set(newJwtToken.accessToken(), newJwtToken.refreshToken());
+        AuthInformation newAuthInformation = new AuthInformation(
+                authInformation.getRoles(), authInformation.getDataSignKey(),
+                authInformation.getAccessTokenValidity(), authInformation.getRefreshTokenValidity(),
+                newJwtToken.accessToken(), newJwtToken.refreshToken(), authInformation.getCreateAt(), localDateTimeProvider.now());
+        opValue.set(newJwtToken.refreshToken(), newAuthInformation);
+
+        redisTemplate.delete(accessToken);
+        redisTemplate.delete(refreshToken);
+
+        redisTemplate.expire(newJwtToken.accessToken(), newAuthInformation.getAccessTokenValidity(), TimeUnit.MILLISECONDS);
+        redisTemplate.expire(newJwtToken.refreshToken(), newAuthInformation.getRefreshTokenValidity(), TimeUnit.MILLISECONDS);
+        redisTemplate.expire(newAuthInformation.getDataSignKey(), newAuthInformation.getRefreshTokenValidity(), TimeUnit.MILLISECONDS);
+
+        return  Optional.of(new TokenReIssueResponse(newJwtToken.accessToken(), newJwtToken.refreshToken()));
     }
 }

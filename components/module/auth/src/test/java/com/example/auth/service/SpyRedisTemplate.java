@@ -6,7 +6,9 @@ import org.springframework.data.redis.core.ValueOperations;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class SpyRedisTemplate extends RedisTemplate<String, Object> {
@@ -14,9 +16,8 @@ public class SpyRedisTemplate extends RedisTemplate<String, Object> {
     public boolean opsForHash_wasCall;
     public SpyValueOperations spyValueOperations = new SpyValueOperations();
     public SpyHashOperations spyHashOperations = new SpyHashOperations();
-    public List<String> expire_key_argument = new ArrayList<>();
-    public List<Long> expire_timeout_argument = new ArrayList<>();
-    public List<TimeUnit> expire_unit_argument = new ArrayList<>();
+    public Map<String, Long> expire_validity_map = new HashMap<>();
+    public Map<String, TimeUnit> expire_timeUnit_map = new HashMap<>();
     public List<String> delete_argument = new ArrayList<>();
     @Override
     public ValueOperations<String, Object> opsForValue() {
@@ -32,9 +33,8 @@ public class SpyRedisTemplate extends RedisTemplate<String, Object> {
 
     @Override
     public Boolean expire(String key, long timeout, TimeUnit unit) {
-        expire_key_argument.add(key);
-        expire_timeout_argument.add(timeout);
-        expire_unit_argument.add(unit);
+        expire_validity_map.put(key, timeout);
+        expire_timeUnit_map.put(key, unit);
         return true;
     }
 

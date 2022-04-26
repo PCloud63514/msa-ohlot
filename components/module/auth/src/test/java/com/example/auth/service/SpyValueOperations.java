@@ -7,19 +7,18 @@ import org.springframework.data.redis.core.ValueOperations;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class SpyValueOperations implements ValueOperations<String, Object> {
-    public List<String> set_key_argument = new ArrayList<>();
-    public List<Object> set_value_argument = new ArrayList<>();
+    public Map<String, Object> set_argument = new HashMap<>();
     public List<String> get_key_argument = new ArrayList<>();
     public AuthInformation get_returnValue = null;
     @Override
     public void set(String key, Object value) {
-        this.set_key_argument.add(key);
-        this.set_value_argument.add(value);
+        this.set_argument.put(key, value);
     }
 
     @Override
