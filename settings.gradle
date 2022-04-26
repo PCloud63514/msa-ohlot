@@ -2,4 +2,6 @@ rootProject.name = 'msa-ohlot'
 
 include ':components:module-ohlot'
 include ':components:module-swagger'
+
 include ':applications:app-ohlot'
+include ':applications:app-discovery'
