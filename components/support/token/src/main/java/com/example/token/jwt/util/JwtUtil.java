@@ -1,15 +1,16 @@
-package com.example.token.jwt;
+package com.example.token.jwt.util;
 
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Optional;
 
+/**
+ * auth service에서 token 읽고 request 객체에 넣는 방법
+ * auth 과정을 통해 request에 넣어진 값을 가져오는 방법
+ * auth api를 통해 토큰 발급받고 사용자에게 주는 방법
+ */
 public class JwtUtil {
     public static final String HEADER_TOKEN_PREFIX = "Bearer ";
     public static final String ACCESS_TOKEN_SYNTAX = "access_token";
@@ -43,7 +44,7 @@ public class JwtUtil {
         }
     }
 
-//    public static AuthToken exportAuthorization(HttpServletRequest request) {
+//    public static ExportToken exportAuthorization(HttpServletRequest request) {
 //        String accessToken = Optional.ofNullable(request.getHeader(ACCESS_TOKEN_SYNTAX))
 //                .orElseThrow(RuntimeException::new);
 //        String refreshToken = Arrays.stream(request.getCookies())

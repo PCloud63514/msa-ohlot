@@ -1,6 +1,8 @@
 package com.example.auth.api;
 
+import com.example.auth.service.SpyAuthService;
 import com.example.auth.service.TokenGenerateRequest;
+import com.example.token.jwt.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -77,8 +79,8 @@ class AuthApiTest {
 
         webTestClient.delete()
                 .uri("/auth")
-                .header(JwtAuthUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
-                .header(JwtAuthUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
+                .header(JwtUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
+                .header(JwtUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -90,11 +92,11 @@ class AuthApiTest {
 
         webTestClient.delete()
                 .uri("/auth")
-                .header(JwtAuthUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
-                .header(JwtAuthUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
+                .header(JwtUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
+                .header(JwtUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
                 .exchange();
 
-        assertThat(spyAuthService.deleteToken_accessToken_argument).isEqualTo(givenAccessToken);
-        assertThat(spyAuthService.deleteToken_refreshToken_argument).isEqualTo(givenRefreshToken);
+        assertThat(authService.deleteToken_accessToken_argument).isEqualTo(givenAccessToken);
+        assertThat(authService.deleteToken_refreshToken_argument).isEqualTo(givenRefreshToken);
     }
 }

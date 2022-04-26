@@ -2,7 +2,6 @@ package com.example.token.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 
 @AllArgsConstructor
 @Getter
