@@ -4,10 +4,15 @@ import com.example.token.jwt.domain.JwtToken;
 import com.example.token.jwt.provider.JwtTokenGenerateRequest;
 import com.example.token.jwt.provider.JwtTokenProvider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpyJwtTokenProvider extends JwtTokenProvider {
     public Long generate_validity_argument;
     public Long generate_refreshValidity_argument;
     public JwtToken generate_returnValue;
+    public List<String> isExpiration_token_argument = new ArrayList<>();
+    public boolean isExpiration_returnValue = false; // false = 만료
 
     public SpyJwtTokenProvider() {
         super(null, null, null);
@@ -19,5 +24,11 @@ public class SpyJwtTokenProvider extends JwtTokenProvider {
         this.generate_refreshValidity_argument = request.getRefreshTokenValidity();
 
         return generate_returnValue;
+    }
+
+    @Override
+    public boolean isExpiration(String token) {
+        this.isExpiration_token_argument.add(token);
+        return isExpiration_returnValue;
     }
 }

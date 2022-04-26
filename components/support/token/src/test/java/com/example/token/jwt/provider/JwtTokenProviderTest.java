@@ -64,4 +64,36 @@ class JwtTokenProviderTest {
         assertThat(jwtToken.getInformation().getAccessTokenValidity()).isEqualTo(givenValidity);
         assertThat(jwtToken.getInformation().getRefreshTokenValidity()).isEqualTo(givenRefreshValidity);
     }
+
+    @Test
+    void isExpiration_returnValue() {
+        Date givenDate = new Date();
+        Claims tokenClaims = Jwts.claims().setSubject("expirationSubject");
+        String givenToken = Jwts.builder()
+                .setClaims(tokenClaims)
+                .setIssuedAt(givenDate)
+                .setExpiration(new Date(givenDate.getTime() + 100000))
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .compact();
+
+        boolean isExpiration = jwtTokenProvider.isExpiration(givenToken);
+
+        assertThat(isExpiration).isFalse();
+    }
+
+    @Test
+    void isExpiration_notExpiredJwtExceptionAndReturnValueTrue() {
+        Date givenDate = new Date();
+        Claims tokenClaims = Jwts.claims().setSubject("expirationSubject");
+        String givenExpirationToken = Jwts.builder()
+                .setClaims(tokenClaims)
+                .setIssuedAt(givenDate)
+                .setExpiration(givenDate)
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .compact();
+
+        boolean isExpiration = jwtTokenProvider.isExpiration(givenExpirationToken);
+
+        assertThat(isExpiration).isTrue();
+    }
 }

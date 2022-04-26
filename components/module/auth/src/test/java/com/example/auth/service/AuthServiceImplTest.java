@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import javax.validation.constraints.Pattern;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,17 +19,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AuthServiceImplTest {
     SpyJwtTokenProvider spyJwtTokenProvider;
     AuthServiceImpl authService;
-    SpyRedisTemplate redisTemplate;
+    SpyRedisTemplate spyRedisTemplate;
     StubLocalDateTimeProvider localDateTimeProvider;
     StubUuidProvider uuidProvider;
 
     @BeforeEach
     void setUp() {
-        redisTemplate = new SpyRedisTemplate();
+        spyRedisTemplate = new SpyRedisTemplate();
         spyJwtTokenProvider = new SpyJwtTokenProvider();
         localDateTimeProvider = new StubLocalDateTimeProvider();
         uuidProvider = new StubUuidProvider();
-        authService = new AuthServiceImpl(spyJwtTokenProvider, redisTemplate, localDateTimeProvider, uuidProvider);
+        authService = new AuthServiceImpl(spyJwtTokenProvider, spyRedisTemplate, localDateTimeProvider, uuidProvider);
     }
 
     @Test
@@ -70,29 +71,29 @@ class AuthServiceImplTest {
 
         authService.generateToken(givenRequest);
 
-        assertThat(redisTemplate.opsForValue_wasCall).isTrue();
-        assertThat(redisTemplate.opsForHash_wasCall).isTrue();
-        assertThat(redisTemplate.spyValueOperations.set_key_argument.get(0)).isEqualTo(spyJwtTokenProvider.generate_returnValue.accessToken());
-        assertThat(redisTemplate.spyValueOperations.set_value_argument.get(0)).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
-        assertThat(redisTemplate.spyValueOperations.set_key_argument.get(1)).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
-        assertThat(((AuthInformation) redisTemplate.spyValueOperations.set_value_argument.get(1)).getAccessToken()).isEqualTo(spyJwtTokenProvider.generate_returnValue.accessToken());
-        assertThat(((AuthInformation) redisTemplate.spyValueOperations.set_value_argument.get(1)).getRefreshToken()).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
-        assertThat(((AuthInformation) redisTemplate.spyValueOperations.set_value_argument.get(1)).getValidity()).isEqualTo(givenRequest.getValidity());
-        assertThat(((AuthInformation) redisTemplate.spyValueOperations.set_value_argument.get(1)).getRefreshValidity()).isEqualTo(givenRequest.getRefreshValidity());
-        assertThat(((AuthInformation) redisTemplate.spyValueOperations.set_value_argument.get(1)).getRoles()).isEqualTo(givenRequest.getRoles());
-        assertThat(((AuthInformation) redisTemplate.spyValueOperations.set_value_argument.get(1)).getDataSignKey()).isEqualTo(uuidProvider.randomUUID.get(0).toString());
-        assertThat(((AuthInformation) redisTemplate.spyValueOperations.set_value_argument.get(1)).getCreateAt()).isEqualTo(localDateTimeProvider.now());
-        assertThat(redisTemplate.spyHashOperations.putAll_key_argument).isEqualTo(uuidProvider.randomUUID.get(0).toString());
-        assertThat(redisTemplate.spyHashOperations.putAll_value_argument).isEqualTo(givenRequest.getData());
-        assertThat(redisTemplate.expire_key_argument.get(0)).isEqualTo(spyJwtTokenProvider.generate_returnValue.accessToken());
-        assertThat(redisTemplate.expire_key_argument.get(1)).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
-        assertThat(redisTemplate.expire_key_argument.get(2)).isEqualTo(uuidProvider.randomUUID.get(0).toString());
-        assertThat(redisTemplate.expire_timeout_argument.get(0)).isEqualTo(givenRequest.getValidity());
-        assertThat(redisTemplate.expire_timeout_argument.get(1)).isEqualTo(givenRequest.getRefreshValidity());
-        assertThat(redisTemplate.expire_timeout_argument.get(2)).isEqualTo(givenRequest.getRefreshValidity());
-        assertThat(redisTemplate.expire_unit_argument.get(0)).isEqualTo(TimeUnit.MILLISECONDS);
-        assertThat(redisTemplate.expire_unit_argument.get(1)).isEqualTo(TimeUnit.MILLISECONDS);
-        assertThat(redisTemplate.expire_unit_argument.get(2)).isEqualTo(TimeUnit.MILLISECONDS);
+        assertThat(spyRedisTemplate.opsForValue_wasCall).isTrue();
+        assertThat(spyRedisTemplate.opsForHash_wasCall).isTrue();
+        assertThat(spyRedisTemplate.spyValueOperations.set_key_argument.get(0)).isEqualTo(spyJwtTokenProvider.generate_returnValue.accessToken());
+        assertThat(spyRedisTemplate.spyValueOperations.set_value_argument.get(0)).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
+        assertThat(spyRedisTemplate.spyValueOperations.set_key_argument.get(1)).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
+        assertThat(((AuthInformation) spyRedisTemplate.spyValueOperations.set_value_argument.get(1)).getAccessToken()).isEqualTo(spyJwtTokenProvider.generate_returnValue.accessToken());
+        assertThat(((AuthInformation) spyRedisTemplate.spyValueOperations.set_value_argument.get(1)).getRefreshToken()).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
+        assertThat(((AuthInformation) spyRedisTemplate.spyValueOperations.set_value_argument.get(1)).getValidity()).isEqualTo(givenRequest.getValidity());
+        assertThat(((AuthInformation) spyRedisTemplate.spyValueOperations.set_value_argument.get(1)).getRefreshValidity()).isEqualTo(givenRequest.getRefreshValidity());
+        assertThat(((AuthInformation) spyRedisTemplate.spyValueOperations.set_value_argument.get(1)).getRoles()).isEqualTo(givenRequest.getRoles());
+        assertThat(((AuthInformation) spyRedisTemplate.spyValueOperations.set_value_argument.get(1)).getDataSignKey()).isEqualTo(uuidProvider.randomUUID.get(0).toString());
+        assertThat(((AuthInformation) spyRedisTemplate.spyValueOperations.set_value_argument.get(1)).getCreateAt()).isEqualTo(localDateTimeProvider.now());
+        assertThat(spyRedisTemplate.spyHashOperations.putAll_key_argument).isEqualTo(uuidProvider.randomUUID.get(0).toString());
+        assertThat(spyRedisTemplate.spyHashOperations.putAll_value_argument).isEqualTo(givenRequest.getData());
+        assertThat(spyRedisTemplate.expire_key_argument.get(0)).isEqualTo(spyJwtTokenProvider.generate_returnValue.accessToken());
+        assertThat(spyRedisTemplate.expire_key_argument.get(1)).isEqualTo(spyJwtTokenProvider.generate_returnValue.refreshToken());
+        assertThat(spyRedisTemplate.expire_key_argument.get(2)).isEqualTo(uuidProvider.randomUUID.get(0).toString());
+        assertThat(spyRedisTemplate.expire_timeout_argument.get(0)).isEqualTo(givenRequest.getValidity());
+        assertThat(spyRedisTemplate.expire_timeout_argument.get(1)).isEqualTo(givenRequest.getRefreshValidity());
+        assertThat(spyRedisTemplate.expire_timeout_argument.get(2)).isEqualTo(givenRequest.getRefreshValidity());
+        assertThat(spyRedisTemplate.expire_unit_argument.get(0)).isEqualTo(TimeUnit.MILLISECONDS);
+        assertThat(spyRedisTemplate.expire_unit_argument.get(1)).isEqualTo(TimeUnit.MILLISECONDS);
+        assertThat(spyRedisTemplate.expire_unit_argument.get(2)).isEqualTo(TimeUnit.MILLISECONDS);
     }
 
     @Test
@@ -102,7 +103,55 @@ class AuthServiceImplTest {
 
         authService.deleteToken(givenAccessToken, givenRefreshToken);
 
-        assertThat(redisTemplate.delete_argument.get(0)).isEqualTo(givenAccessToken);
-        assertThat(redisTemplate.delete_argument.get(1)).isEqualTo(givenRefreshToken);
+        assertThat(spyRedisTemplate.delete_argument).contains(givenAccessToken, givenRefreshToken);
+    }
+
+    @Test
+    void reIssueToken_passesRefreshTokenToJwtTokenProvider() {
+        String givenRefreshToken = "refreshToken";
+        spyJwtTokenProvider.isExpiration_returnValue = true;
+
+        authService.reIssueToken(null, givenRefreshToken);
+
+        assertThat(spyJwtTokenProvider.isExpiration_token_argument).contains(givenRefreshToken);
+    }
+
+    @Test
+    void reIssueToken_refreshTokenIsExpirationTheReturnValueEmpty() throws Exception {
+        String givenRefreshToken = "refreshToken";
+        spyJwtTokenProvider.isExpiration_returnValue = true;
+
+        Optional<TokenReIssueResponse> responseOpt = authService.reIssueToken(null, givenRefreshToken);
+
+        assertThat(responseOpt.isEmpty()).isTrue();
+    }
+
+    @Test
+    void reIssueToken_passesRefreshToValueOperations() throws Exception {
+        String givenRefreshToken = "refreshToken";
+
+        authService.reIssueToken(null, givenRefreshToken);
+
+        assertThat(spyRedisTemplate.spyValueOperations.get_key_argument).contains(givenRefreshToken);
+    }
+
+    @Test
+    void reIssueToken_nullOfOpValueGet_The_ReturnValueEmpty() throws Exception {
+        String givenRefreshToken = "refreshToken";
+
+        Optional<TokenReIssueResponse> response = authService.reIssueToken(null, givenRefreshToken);
+
+        assertThat(response.isEmpty()).isTrue();
+    }
+
+    @Test
+    void reIssueToken_accessToken_NotEquals_AccessTokenOfAuthInformation_The_ReturnValueEmpty() throws Exception {
+        String givenAccessToken = "FakeAccessToken";
+        String givenRefreshToken = "refreshToken";
+        spyRedisTemplate.spyValueOperations.get_returnValue = new AuthInformation(null, null, null, null, "AccessToken", null, null);
+
+        Optional<TokenReIssueResponse> response = authService.reIssueToken(givenAccessToken, givenRefreshToken);
+
+        assertThat(response.isEmpty()).isTrue();
     }
 }

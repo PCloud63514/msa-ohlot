@@ -7,6 +7,7 @@ import com.example.token.provider.DateProvider;
 import com.example.token.provider.TokenProvider;
 import com.example.token.provider.UuidProvider;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,18 @@ public class JwtTokenProvider implements TokenProvider<JwtToken, JwtTokenGenerat
                 .setExpiration(new Date(currentDate.getTime() + validity))
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
+    }
+
+    public boolean isExpiration(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(jwtProperties.getSecretKey())
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException expiredJwtException) {
+            expiredJwtException.printStackTrace();
+            return true;
+        }
+        return false;
     }
 }
