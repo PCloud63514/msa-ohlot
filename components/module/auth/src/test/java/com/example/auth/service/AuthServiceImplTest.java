@@ -107,9 +107,23 @@ class AuthServiceImplTest {
     }
 
     @Test
+    void reIssueToken_returnValue() throws Exception {
+        String givenAccessToken = "AccessToken";
+        String givenRefreshToken = "refreshToken";
+        spyRedisTemplate.spyValueOperations.get_returnValue = new AuthInformation(null, null, null, null, givenAccessToken, null, null);
+        spyJwtTokenProvider.isExpiration_returnValue.put(givenAccessToken, true);
+
+        Optional<TokenReIssueResponse> response = authService.reIssueToken(givenAccessToken, givenRefreshToken);
+
+        assertThat(response.isEmpty()).isFalse();
+        assertThat(response.get().getAccessToken()).isEqualTo("ReIssueAccessToken");
+        assertThat(response.get().getRefreshToken()).isEqualTo("ReIssueRefreshToken");
+    }
+
+    @Test
     void reIssueToken_passesRefreshTokenToJwtTokenProvider() {
         String givenRefreshToken = "refreshToken";
-        spyJwtTokenProvider.isExpiration_returnValue = true;
+        spyJwtTokenProvider.isExpiration_returnValue.put(givenRefreshToken, true);
 
         authService.reIssueToken(null, givenRefreshToken);
 
@@ -119,7 +133,7 @@ class AuthServiceImplTest {
     @Test
     void reIssueToken_refreshTokenIsExpirationTheReturnValueEmpty() throws Exception {
         String givenRefreshToken = "refreshToken";
-        spyJwtTokenProvider.isExpiration_returnValue = true;
+        spyJwtTokenProvider.isExpiration_returnValue.put(givenRefreshToken, true);
 
         Optional<TokenReIssueResponse> responseOpt = authService.reIssueToken(null, givenRefreshToken);
 
@@ -153,5 +167,19 @@ class AuthServiceImplTest {
         Optional<TokenReIssueResponse> response = authService.reIssueToken(givenAccessToken, givenRefreshToken);
 
         assertThat(response.isEmpty()).isTrue();
+    }
+
+    @Test
+    void reIssueToken_passesAccessToken_To_IsExpiration_Of_JwtTokenProvider() throws Exception {
+        String givenAccessToken = "AccessToken";
+        String givenRefreshToken = "refreshToken";
+        spyRedisTemplate.spyValueOperations.get_returnValue = new AuthInformation(null, null, null, null, givenAccessToken, null, null);
+        spyJwtTokenProvider.isExpiration_returnValue.put(givenAccessToken, false);
+
+        Optional<TokenReIssueResponse> response = authService.reIssueToken(givenAccessToken, givenRefreshToken);
+
+        assertThat(response.isEmpty()).isFalse();
+        assertThat(response.get().getAccessToken()).isEqualTo(givenAccessToken);
+        assertThat(response.get().getRefreshToken()).isEqualTo(givenRefreshToken);
     }
 }

@@ -58,9 +58,11 @@ public class AuthServiceImpl implements AuthService {
         if (jwtTokenProvider.isExpiration(refreshToken)) return Optional.empty();
         ValueOperations<String, Object> opValue = redisTemplate.opsForValue();
         AuthInformation authInformation = (AuthInformation) opValue.get(refreshToken);
-        if (authInformation == null) return Optional.empty();
-        if (!accessToken.equals(authInformation.getAccessToken())) return Optional.empty();
+        if (authInformation == null || !accessToken.equals(authInformation.getAccessToken())) return Optional.empty();
+        if (!jwtTokenProvider.isExpiration(accessToken)) {
+            return Optional.of(new TokenReIssueResponse(accessToken, refreshToken));
+        }
 
-        return  null;
+        return  Optional.of(new TokenReIssueResponse("ReIssueAccessToken", "ReIssueRefreshToken"));
     }
 }
