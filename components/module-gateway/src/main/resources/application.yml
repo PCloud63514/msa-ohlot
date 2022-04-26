@@ -1,0 +1,17 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  profiles:
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+server:
+  servlet:
+    session:
+      timeout: 43200m
+      cookie:
+        max-age: 43200m
+        name: SID
+        http-only: true # js 조회 안됨
+        secure: true # https
