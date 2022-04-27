@@ -1,8 +1,8 @@
 package com.example.auth.api;
 
+import com.example.auth.AuthUtil;
 import com.example.auth.service.SpyAuthService;
 import com.example.auth.service.TokenGenerateRequest;
-import com.example.token.jwt.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AuthApiTest {
     private WebTestClient webTestClient;
     private SpyAuthService authService;
-
+    private SpyAuthUtil spyAuthUtil;
     @BeforeEach
     void setUp() {
         authService = new SpyAuthService();
-        webTestClient = WebTestClient.bindToController(new AuthApi(authService))
+        webTestClient = WebTestClient.bindToController(new AuthApi(authService, spyAuthUtil))
                 .configureClient()
                 .build();
     }
@@ -79,8 +79,8 @@ class AuthApiTest {
 
         webTestClient.delete()
                 .uri("/auth")
-                .header(JwtUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
-                .header(JwtUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
+                .header(AuthUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
+                .header(AuthUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -92,8 +92,8 @@ class AuthApiTest {
 
         webTestClient.delete()
                 .uri("/auth")
-                .header(JwtUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
-                .header(JwtUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
+                .header(AuthUtil.ACCESS_TOKEN_SYNTAX, givenAccessToken)
+                .header(AuthUtil.REFRESH_TOKEN_SYNTAX, givenRefreshToken)
                 .exchange();
 
         assertThat(authService.deleteToken_accessToken_argument).isEqualTo(givenAccessToken);

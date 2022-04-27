@@ -111,6 +111,26 @@ class AuthServiceImplTest {
     }
 
     @Test
+    void getAuthDataInformation_returnValue() throws Exception {
+        String givenToken = "accessToken";
+
+        Optional<AuthDataInformation> authDataInformationOpt = authService.getAuthDataInformation(givenToken);
+
+        assertThat(authDataInformationOpt.isPresent()).isTrue();
+    }
+
+    @Test
+    void getAuthDataInformation_passesAccessToken_To_IsExpiration_Of_JwtTokenProvider() throws Exception {
+        String givenToken = "accessToken";
+        spyJwtTokenProvider.isExpiration_returnValue.put(givenToken, true);
+
+        Optional<AuthDataInformation> authDataInformation = authService.getAuthDataInformation(givenToken);
+
+        assertThat(spyJwtTokenProvider.isExpiration_token_argument).contains(givenToken);
+        assertThat(authDataInformation.isEmpty()).isTrue();
+    }
+
+    @Test
     void reIssueToken_returnValue() throws Exception {
         String givenAccessToken = "AccessToken";
         String givenRefreshToken = "refreshToken";

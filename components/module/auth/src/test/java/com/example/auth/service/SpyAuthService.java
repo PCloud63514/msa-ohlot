@@ -21,6 +21,11 @@ public class SpyAuthService implements AuthService {
     }
 
     @Override
+    public Optional<AuthDataInformation> getAuthDataInformation(String accessToken) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<TokenReIssueResponse> reIssueToken(String accessToken, String refreshToken) {
         return Optional.empty();
     }

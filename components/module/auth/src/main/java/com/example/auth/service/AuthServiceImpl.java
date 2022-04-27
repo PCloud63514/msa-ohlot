@@ -56,6 +56,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public Optional<AuthDataInformation> getAuthDataInformation(String accessToken) {
+        if (jwtTokenProvider.isExpiration(accessToken)) return Optional.empty();
+        return Optional.of(new AuthDataInformation());
+    }
+
+    @Override
     public Optional<TokenReIssueResponse> reIssueToken(String accessToken, String refreshToken) {
         if (jwtTokenProvider.isExpiration(refreshToken)) return Optional.empty();
         ValueOperations<String, Object> opValue = redisTemplate.opsForValue();

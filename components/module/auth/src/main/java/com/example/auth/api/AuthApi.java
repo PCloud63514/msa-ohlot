@@ -1,5 +1,6 @@
 package com.example.auth.api;
 
+import com.example.auth.AuthUtil;
 import com.example.auth.service.AuthService;
 import com.example.auth.service.TokenGenerateRequest;
 import com.example.auth.service.TokenGenerateResponse;
@@ -17,14 +18,15 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 import java.util.Optional;
 
-import static com.example.token.jwt.util.JwtUtil.ACCESS_TOKEN_SYNTAX;
-import static com.example.token.jwt.util.JwtUtil.REFRESH_TOKEN_SYNTAX;
+import static com.example.auth.AuthUtil.ACCESS_TOKEN_SYNTAX;
+import static com.example.auth.AuthUtil.REFRESH_TOKEN_SYNTAX;
 
 @RequiredArgsConstructor
 @RequestMapping("auth")
 @RestController
 public class AuthApi {
     private final AuthService authService;
+    private final AuthUtil authUtil;
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
@@ -32,7 +34,7 @@ public class AuthApi {
         TokenGenerateResponse response = authService.generateToken(request);
         return Mono.just(new TokenIssueResponse(response.getAccessToken(), response.getRefreshToken()));
     }
-
+    // 맞다 여기는 사용자가 접근하는게 아니라 다르다
     @DeleteMapping
     public void breakToken(ServerHttpRequest request) {
         String accessToken = Optional.ofNullable(request.getHeaders()

@@ -1,11 +1,12 @@
 rootProject.name = 'msa-ohlot'
 
+include ':components:support:swagger'
+include ':components:support:token'
+include ':components:support:auth-util'
+
 include ':components:module:ohlot'
 include ':components:module:gateway'
 include ':components:module:auth'
-
-include ':components:support:swagger'
-include ':components:support:token'
 
 include ':applications:app-ohlot'
 include ':applications:app-discovery'

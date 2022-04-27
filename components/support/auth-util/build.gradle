@@ -1,7 +1,4 @@
 dependencies {
     implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation 'org.springframework:spring-web:5.3.15'
-
-    implementation "io.jsonwebtoken:jjwt:0.9.1"
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 }
