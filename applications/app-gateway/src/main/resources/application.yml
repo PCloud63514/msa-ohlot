@@ -24,6 +24,9 @@ eureka:
 spring:
   application:
     name: gateway-service
+  redis:
+    host: localhost
+    port: 6379
   main:
     allow-bean-definition-overriding: true
   cloud:
@@ -33,3 +36,6 @@ spring:
           uri: lb://ohlot-service
           predicates:
             - Path=/good-words/**
+
+support:
+  secret-key: secretKey

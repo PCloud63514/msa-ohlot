@@ -15,3 +15,6 @@ server:
         name: SID
         http-only: true # js 조회 안됨
         secure: true # https
+
+support:
+  secret-key: secretKey
