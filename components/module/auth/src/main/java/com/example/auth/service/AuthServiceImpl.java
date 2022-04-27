@@ -70,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
         HashOperations<String, String, Object> opHash = redisTemplate.opsForHash();
         Map<String, Object> data = opHash.entries(authInformation.getDataSignKey());
 
-        return Optional.of(new AuthDataInformation(authInformation.getRoles(), data));
+        return Optional.of(new AuthDataInformation(authInformation.getDataSignKey(), authInformation.getRoles(), data));
     }
 
     @Override

@@ -127,6 +127,7 @@ class AuthServiceImplTest {
         assertThat(authDataInformationOpt.isPresent()).isTrue();
 
         AuthDataInformation authDataInformation = authDataInformationOpt.get();
+        assertThat(authDataInformation.getDataSignKey()).isEqualTo(givenAuthInformation.getDataSignKey());
         assertThat(authDataInformation.getRoles()).isEqualTo(givenAuthInformation.getRoles());
         assertThat(authDataInformation.getData()).isEqualTo(givenData);
     }

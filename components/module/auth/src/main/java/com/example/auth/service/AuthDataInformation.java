@@ -12,6 +12,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Getter
 public class AuthDataInformation {
+    private String dataSignKey;
     private List<@Pattern(regexp = "^ROLE_\\w{1,20}$") String> roles;
     private Map<String, Object> data;
 }
