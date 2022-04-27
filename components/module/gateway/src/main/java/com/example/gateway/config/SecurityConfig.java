@@ -6,6 +6,7 @@ import com.example.gateway.config.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -44,9 +45,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .formLogin().disable()
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/admin/login", "/admin/join").permitAll()
-//                        .pathMatchers("/good-words/**").permitAll()
-                        .pathMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .pathMatchers(HttpMethod.POST,"/good-words/**").hasAnyRole("OHLOT")
+                        .pathMatchers(HttpMethod.PATCH,"/good-words/**").hasAnyRole("OHLOT")
+                        .pathMatchers(HttpMethod.DELETE,"/good-words/**").hasAnyRole("OHLOT")
                         .pathMatchers("/**").access(this::whiteListIp)
                         .anyExchange().authenticated()
                 ).addFilterAt(new JwtAuthenticationFilter(authService, authUtil), SecurityWebFiltersOrder.HTTP_BASIC);
