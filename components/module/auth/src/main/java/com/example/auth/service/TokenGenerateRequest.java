@@ -14,7 +14,7 @@ import java.util.Map;
 @Getter
 public class TokenGenerateRequest {
     @NotNull
-    private List<@Pattern(regexp = "^ROLE_\\w{1,20}$") String> roles;
+    private List<@Pattern(regexp = "^ROLE_\\w{1,20}$", message = "틀렸어!") String> roles;
     private Map<String, Object> data;
     @NotNull
     private Long validity;

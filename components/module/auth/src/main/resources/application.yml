@@ -8,4 +8,5 @@ spring:
     allow-bean-definition-overriding: true
 
 support:
-  secret-key: secretKey
+  jwt:
+    secret-key: secretKey

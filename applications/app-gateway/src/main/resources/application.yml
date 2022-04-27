@@ -29,6 +29,8 @@ spring:
     port: 6379
   main:
     allow-bean-definition-overriding: true
+  profiles:
+    active: local
   cloud:
     gateway:
       routes:
@@ -37,5 +39,7 @@ spring:
           predicates:
             - Path=/good-words/**
 
+
 support:
-  secret-key: secretKey
+  jwt:
+    secret-key: secretKey

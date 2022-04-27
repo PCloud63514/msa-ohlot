@@ -1,10 +1,15 @@
 package com.example.gateway.config;
 
+import com.example.auth.AuthUtil;
+import com.example.auth.service.AuthService;
+import com.example.gateway.config.filter.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -16,6 +21,10 @@ import java.util.Objects;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
+    @Autowired
+    AuthService authService;
+    @Autowired
+    AuthUtil authUtil;
     @Value("${white-ip:0:0:0:0:0:0:0:1, 127.0.0.1, 192.168.1.1}")
     List<String> whiteIpList;
 
@@ -36,10 +45,11 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/admin/login", "/admin/join").permitAll()
+//                        .pathMatchers("/good-words/**").permitAll()
                         .pathMatchers("/admin/**").hasAnyRole("ADMIN")
                         .pathMatchers("/**").access(this::whiteListIp)
                         .anyExchange().authenticated()
-                );
+                ).addFilterAt(new JwtAuthenticationFilter(authService, authUtil), SecurityWebFiltersOrder.HTTP_BASIC);
         return http.build();
     }
 

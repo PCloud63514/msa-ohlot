@@ -1,4 +1,9 @@
+server:
+  port: 0
+
 spring:
+  application:
+    name: ohlot-service # gateway에서 찾는 이름이다.
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher # Swagger에서 Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException 에러 해결용
@@ -24,3 +29,4 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+

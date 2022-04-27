@@ -17,4 +17,5 @@ server:
         secure: true # https
 
 support:
-  secret-key: secretKey
+  jwt:
+    secret-key: secretKey

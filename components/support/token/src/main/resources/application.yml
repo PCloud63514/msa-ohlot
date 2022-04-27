@@ -1,2 +1,3 @@
 support:
-  secret-key: secretKey
+  jwt:
+    secret-key: secretKey

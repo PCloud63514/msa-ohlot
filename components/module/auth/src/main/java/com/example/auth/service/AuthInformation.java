@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class AuthInformation {
+public class AuthInformation implements Serializable {
     private List<String> roles;
     private String dataSignKey;
     private Long accessTokenValidity;
