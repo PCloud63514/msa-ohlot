@@ -13,6 +13,8 @@ import java.util.Set;
 public class SpyHashOperations implements HashOperations<String, String, Object> {
     public String putAll_key_argument;
     public Map<? extends String, ?> putAll_value_argument;
+    public String entries_argument;
+    public Map<String, Object> entries_returnValue;
 
     @Override
     public Long delete(String key, Object... hashKeys) {
@@ -102,7 +104,8 @@ public class SpyHashOperations implements HashOperations<String, String, Object>
 
     @Override
     public Map<String, Object> entries(String key) {
-        return null;
+        this.entries_argument = key;
+        return this.entries_returnValue;
     }
 
     @Override

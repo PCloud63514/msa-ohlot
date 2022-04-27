@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 public class SpyValueOperations implements ValueOperations<String, Object> {
     public Map<String, Object> set_argument = new HashMap<>();
-    public List<String> get_key_argument = new ArrayList<>();
-    public AuthInformation get_returnValue = null;
+    public List<String> get_argument = new ArrayList<>();
+    public Map<String, Object> get_returnValue = new HashMap<>();
     @Override
     public void set(String key, Object value) {
         this.set_argument.put(key, value);
@@ -58,8 +58,8 @@ public class SpyValueOperations implements ValueOperations<String, Object> {
 
     @Override
     public Object get(Object key) {
-        get_key_argument.add((String)key);
-        return this.get_returnValue;
+        get_argument.add((String)key);
+        return get_returnValue.getOrDefault((String)key, null);
     }
 
     @Override

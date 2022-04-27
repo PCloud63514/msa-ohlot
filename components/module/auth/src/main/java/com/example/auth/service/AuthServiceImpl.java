@@ -10,8 +10,10 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -58,7 +60,17 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Optional<AuthDataInformation> getAuthDataInformation(String accessToken) {
         if (jwtTokenProvider.isExpiration(accessToken)) return Optional.empty();
-        return Optional.of(new AuthDataInformation());
+        ValueOperations<String, Object> opValue = redisTemplate.opsForValue();
+        String refreshToken = (String) opValue.get(accessToken);
+        if (!StringUtils.hasText(refreshToken)) return Optional.empty();
+
+        AuthInformation authInformation = (AuthInformation) opValue.get(refreshToken);
+        if(authInformation == null) return Optional.empty();
+
+        HashOperations<String, String, Object> opHash = redisTemplate.opsForHash();
+        Map<String, Object> data = opHash.entries(authInformation.getDataSignKey());
+
+        return Optional.of(new AuthDataInformation(authInformation.getRoles(), data));
     }
 
     @Override
