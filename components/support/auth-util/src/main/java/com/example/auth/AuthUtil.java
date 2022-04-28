@@ -71,11 +71,11 @@ public class AuthUtil {
     }
 
     public AuthRequestToken reactiveExportAuthorization(ServerHttpRequest request) {
-        String authorization = request.getHeaders().getFirst(ACCESS_TOKEN_SYNTAX);
+        String authorization = null;
         String refreshToken = null;
-
-        if (StringUtils.hasText(authorization) && authorization.startsWith(HEADER_TOKEN_PREFIX)) {
-            authorization = authorization.replaceAll(HEADER_TOKEN_PREFIX, "");
+        String _authorization = request.getHeaders().getFirst(ACCESS_TOKEN_SYNTAX);
+        if (StringUtils.hasText(_authorization) && _authorization.startsWith(HEADER_TOKEN_PREFIX)) {
+            authorization = _authorization.replaceAll(HEADER_TOKEN_PREFIX, "");
         }
 
         HttpCookie cookie = request.getCookies().getFirst(REFRESH_TOKEN_SYNTAX);
