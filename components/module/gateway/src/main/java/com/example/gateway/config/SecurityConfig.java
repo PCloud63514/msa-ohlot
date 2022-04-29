@@ -2,7 +2,7 @@ package com.example.gateway.config;
 
 import com.example.auth.AuthUtil;
 import com.example.auth.service.AuthService;
-import com.example.gateway.config.filter.JwtAuthenticationFilter;
+import com.example.gateway.config.filter.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.DELETE,"/good-words/**").hasAnyRole("OHLOT")
                         .pathMatchers("/**").access(this::whiteListIp)
                         .anyExchange().authenticated()
-                ).addFilterAt(new JwtAuthenticationFilter(authService, authUtil), SecurityWebFiltersOrder.HTTP_BASIC);
+                ).addFilterAt(new JwtAuthorizationFilter(authService, authUtil), SecurityWebFiltersOrder.HTTP_BASIC);
         return http.build();
     }
 

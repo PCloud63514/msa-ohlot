@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter implements WebFilter {
+public class JwtAuthorizationFilter implements WebFilter {
     private final AuthService authService;
     private final AuthUtil authUtil;
 
