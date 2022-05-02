@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AuthApiTest {
     private WebTestClient webTestClient;
     private SpyAuthService authService;
-    private SpyAuthUtil spyAuthUtil;
+
     @BeforeEach
     void setUp() {
         authService = new SpyAuthService();
-        webTestClient = WebTestClient.bindToController(new AuthApi(authService, spyAuthUtil))
+        webTestClient = WebTestClient.bindToController(new AuthApi(authService))
                 .configureClient()
                 .build();
     }
