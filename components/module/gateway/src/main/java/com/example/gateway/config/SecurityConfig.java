@@ -1,7 +1,7 @@
 package com.example.gateway.config;
 
-import com.example.auth.AuthUtil;
-import com.example.auth.service.AuthService;
+import com.example.atg.AuthUtil;
+import com.example.atg.service.AuthService;
 import com.example.gateway.config.filter.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

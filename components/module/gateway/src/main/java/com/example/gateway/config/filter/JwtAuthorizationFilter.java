@@ -1,10 +1,10 @@
 package com.example.gateway.config.filter;
 
-import com.example.auth.AuthRequestToken;
-import com.example.auth.AuthUtil;
-import com.example.auth.service.AuthDataInformation;
-import com.example.auth.service.AuthService;
-import com.example.auth.service.TokenReIssueResponse;
+import com.example.atg.AuthRequestToken;
+import com.example.atg.AuthUtil;
+import com.example.atg.service.AuthDataInformation;
+import com.example.atg.service.AuthService;
+import com.example.atg.service.TokenReIssueResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
