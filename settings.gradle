@@ -11,6 +11,7 @@ include ':components:module:gateway'
 include ':components:module:atg'
 include ':components:module:member'
 include ':components:module:auth'
+include ':components:module:auth-store'
 
 include ':applications:app-ohlot'
 include ':applications:app-discovery'
