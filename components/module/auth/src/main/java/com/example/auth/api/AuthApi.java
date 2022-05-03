@@ -40,7 +40,7 @@ public class AuthApi {
     private final AuthUtil authUtil;
 
 
-    @GetMapping
+    @GetMapping("authTest")
     public Mono<String> authTest(@SessionAttribute("crypt") String crypt, @RequestParam("pw") String password) {
         String encodePassword = Base64.getEncoder().encodeToString(SHA256.encrypt(password).getBytes(StandardCharsets.UTF_8));
         return Mono.just(SHA256.encrypt(encodePassword, crypt));
