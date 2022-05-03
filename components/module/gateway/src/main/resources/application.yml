@@ -1,11 +1,19 @@
 spring:
+  # components:support:swagger
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: local
+  # components:module:auth-store
   redis:
     host: localhost
     port: 6379
-  profiles:
-    active: local
-  main:
-    allow-bean-definition-overriding: true
+  session:
+    store-type: redis
+    redis:
+      flush-mode: immediate
+
+# components:module:gateway
 server:
   servlet:
     session:
@@ -16,6 +24,12 @@ server:
         http-only: true # js 조회 안됨
         secure: true # https
 
+# components:support:token
 support:
   jwt:
     secret-key: secretKey
+
+# components:module:auth-store
+filter:
+  exclude-list:
+    - /auth/**

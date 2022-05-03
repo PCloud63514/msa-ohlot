@@ -1,8 +1,10 @@
 spring:
+  application:
+    name: auth-service
   # components:support:swagger
   main:
     allow-bean-definition-overriding: true
-  # components:module:auth
+  # components:module:auth-store
   redis:
     host: localhost
     port: 6379
@@ -10,6 +12,16 @@ spring:
     store-type: redis
     redis:
       flush-mode: immediate
+
+eureka:
+  instance:
+    instance-id: auth-microservice-instance
+    appname: auth-service
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
 
 
 # components:support:token
@@ -25,4 +37,4 @@ filter:
 # :components:client:member
 client:
   member:
-    url: http://localhost:8788/members
+    url: lb://member-service # http://localhost:8788/members
