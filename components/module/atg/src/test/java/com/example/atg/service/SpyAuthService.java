@@ -2,7 +2,7 @@ package com.example.atg.service;
 
 import java.util.Optional;
 
-public class SpyAuthService implements AuthService {
+public class SpyAuthService implements AuthTokenService {
     public TokenGenerateRequest generateToken_argument;
     public TokenGenerateResponse generateToken_returnValue = new TokenGenerateResponse("accessToken1", "refresh");
     public String deleteToken_accessToken_argument;

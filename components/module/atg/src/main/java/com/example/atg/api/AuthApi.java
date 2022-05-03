@@ -1,8 +1,9 @@
 package com.example.atg.api;
 
-import com.example.atg.service.AuthService;
+import com.example.atg.service.AuthTokenService;
 import com.example.atg.service.TokenGenerateRequest;
 import com.example.atg.service.TokenGenerateResponse;
+import com.example.auth.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -17,14 +18,11 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 import java.util.Optional;
 
-import static com.example.atg.AuthUtil.ACCESS_TOKEN_SYNTAX;
-import static com.example.atg.AuthUtil.REFRESH_TOKEN_SYNTAX;
-
 @RequiredArgsConstructor
 @RequestMapping("auth")
 @RestController
 public class AuthApi {
-    private final AuthService authService;
+    private final AuthTokenService authService;
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
@@ -36,10 +34,10 @@ public class AuthApi {
     @DeleteMapping
     public void breakToken(ServerHttpRequest request) {
         String accessToken = Optional.ofNullable(request.getHeaders()
-                        .getFirst(ACCESS_TOKEN_SYNTAX))
+                        .getFirst(AuthUtil.ACCESS_TOKEN_SYNTAX))
                 .orElseThrow(RuntimeException::new);
         String refreshToken = Optional.ofNullable(request.getHeaders()
-                        .getFirst(REFRESH_TOKEN_SYNTAX))
+                        .getFirst(AuthUtil.REFRESH_TOKEN_SYNTAX))
                 .orElseThrow(RuntimeException::new);
         authService.deleteToken(accessToken, refreshToken);
     }

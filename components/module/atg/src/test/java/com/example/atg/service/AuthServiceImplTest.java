@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AuthServiceImplTest {
     SpyJwtTokenProvider spyJwtTokenProvider;
-    AuthServiceImpl authService;
+    AuthTokenServiceImpl authService;
     SpyRedisTemplate spyRedisTemplate;
     StubLocalDateTimeProvider stubLocalDateTimeProvider;
     StubUuidProvider uuidProvider;
@@ -30,7 +30,7 @@ class AuthServiceImplTest {
         spyJwtTokenProvider = new SpyJwtTokenProvider();
         stubLocalDateTimeProvider = new StubLocalDateTimeProvider();
         uuidProvider = new StubUuidProvider();
-        authService = new AuthServiceImpl(spyJwtTokenProvider, spyRedisTemplate, stubLocalDateTimeProvider, uuidProvider);
+        authService = new AuthTokenServiceImpl(spyJwtTokenProvider, spyRedisTemplate, stubLocalDateTimeProvider, uuidProvider);
     }
 
     @Test

@@ -1,6 +1,6 @@
 package com.example.atg.api;
 
-import com.example.atg.AuthUtil;
+import com.example.auth.util.AuthUtil;
 import com.example.atg.service.SpyAuthService;
 import com.example.atg.service.TokenGenerateRequest;
 import org.junit.jupiter.api.BeforeEach;

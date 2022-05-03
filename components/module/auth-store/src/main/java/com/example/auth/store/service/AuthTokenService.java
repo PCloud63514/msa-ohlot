@@ -1,8 +1,8 @@
-package com.example.atg.service;
+package com.example.auth.store.service;
 
 import java.util.Optional;
 
-public interface AuthService {
+public interface AuthTokenService {
     TokenGenerateResponse generateToken(TokenGenerateRequest request);
     void deleteToken(String accessToken, String refreshToken);
 

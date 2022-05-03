@@ -11,6 +11,6 @@ public class MemberApi {
 
     @GetMapping
     public MemberGetResponse getMember(@RequestParam(name = "id") String id) {
-        return new MemberGetResponse("id", "password", "name");
+        return new MemberGetResponse("id", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", "name");
     }
 }
