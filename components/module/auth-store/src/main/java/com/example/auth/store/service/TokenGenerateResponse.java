@@ -1,11 +1,11 @@
-package com.example.atg;
+package com.example.auth.store.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class AuthRequestToken {
+public class TokenGenerateResponse {
     private final String accessToken;
     private final String refreshToken;
 }

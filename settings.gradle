@@ -5,6 +5,7 @@ include ':components:support:token'
 include ':components:support:auth-util'
 include ':components:support:simple-provider'
 include ':components:support:crypto'
+include ':components:support:mapper'
 
 include ':components:module:ohlot'
 include ':components:module:gateway'
@@ -18,3 +19,5 @@ include ':applications:app-discovery'
 include ':applications:app-gateway'
 include ':applications:app-member'
 include ':applications:app-auth'
+
+include ':components:client:member'

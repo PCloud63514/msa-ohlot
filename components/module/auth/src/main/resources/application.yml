@@ -23,3 +23,8 @@ support:
 filter:
   exclude-list:
     - /auth/**
+
+# :components:client:member
+client:
+  member:
+    url: http://localhost:8788/members

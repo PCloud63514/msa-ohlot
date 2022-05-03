@@ -1,5 +1,7 @@
 package com.example.auth.store.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,20 +41,20 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
+    public RedisTemplate<String, Object> redisTemplate(@Autowired ObjectMapper objectMapper) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper));
 
         return redisTemplate;
     }
 
     @Bean
-    public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate() {
+    public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate(@Autowired ObjectMapper objectMapper) {
         RedisSerializationContext<String, Object> context = RedisSerializationContext.<String, Object>newSerializationContext(new StringRedisSerializer())
                 .hashKey(new StringRedisSerializer())
-                .hashValue(new GenericJackson2JsonRedisSerializer())
+                .hashValue(new GenericJackson2JsonRedisSerializer(objectMapper))
                 .build();
 
         return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory(), context);

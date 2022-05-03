@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Service
-public class AuthServiceImpl implements AuthService {
+public class AuthTokenServiceImpl implements AuthTokenService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, Object> redisTemplate;
     private final LocalDateTimeProvider localDateTimeProvider;

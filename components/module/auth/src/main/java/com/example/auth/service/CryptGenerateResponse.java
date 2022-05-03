@@ -1,4 +1,4 @@
-package com.example.auth.api;
+package com.example.auth.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

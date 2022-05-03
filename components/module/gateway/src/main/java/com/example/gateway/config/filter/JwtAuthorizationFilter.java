@@ -1,9 +1,9 @@
 package com.example.gateway.config.filter;
 
-import com.example.atg.AuthRequestToken;
-import com.example.atg.AuthUtil;
+import com.example.auth.util.AuthRequestToken;
+import com.example.auth.util.AuthUtil;
 import com.example.atg.service.AuthDataInformation;
-import com.example.atg.service.AuthService;
+import com.example.atg.service.AuthTokenService;
 import com.example.atg.service.TokenReIssueResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter implements WebFilter {
-    private final AuthService authService;
+    private final AuthTokenService authService;
     private final AuthUtil authUtil;
 
     @Override

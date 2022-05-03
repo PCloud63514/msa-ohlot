@@ -2,8 +2,6 @@ spring:
   # components:support:swagger
   main:
     allow-bean-definition-overriding: true
-  profiles:
-    active: local
   # components:module:auth
   redis:
     host: localhost
@@ -23,6 +21,8 @@ support:
 filter:
   exclude-list:
     - /auth/**
-    - /swagger-ui/**
-    - /swagger-*
-    - /v2/api-docs
+
+# :components:client:member
+client:
+  member:
+    url: http://localhost:8788/members

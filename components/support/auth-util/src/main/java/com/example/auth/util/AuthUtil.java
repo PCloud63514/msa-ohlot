@@ -1,4 +1,4 @@
-package com.example.atg;
+package com.example.auth.util;
 
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;

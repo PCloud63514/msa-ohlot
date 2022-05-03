@@ -1,7 +1,7 @@
 package com.example.gateway.config;
 
-import com.example.atg.AuthUtil;
-import com.example.atg.service.AuthService;
+import com.example.auth.util.AuthUtil;
+import com.example.atg.service.AuthTokenService;
 import com.example.gateway.config.filter.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +23,7 @@ import java.util.Objects;
 @EnableWebFluxSecurity
 public class SecurityConfig {
     @Autowired
-    AuthService authService;
+    AuthTokenService authService;
     @Autowired
     AuthUtil authUtil;
     @Value("${white-ip:0:0:0:0:0:0:0:1, 127.0.0.1, 192.168.1.1}")

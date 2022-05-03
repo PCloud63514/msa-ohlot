@@ -5,4 +5,5 @@ dependencies {
     implementation(project(':components:support:crypto'))
     implementation(project(':components:support:swagger'))
     implementation(project(':components:module:auth-store'))
+    api(project(':components:client:member'))
 }
