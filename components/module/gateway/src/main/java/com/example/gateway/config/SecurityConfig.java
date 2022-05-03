@@ -1,16 +1,10 @@
 package com.example.gateway.config;
 
-import com.example.auth.store.service.AuthTokenService;
-import com.example.auth.util.AuthUtil;
-import com.example.gateway.config.filter.JwtAuthorizationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -22,10 +16,6 @@ import java.util.Objects;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
-    @Autowired
-    AuthTokenService authService;
-    @Autowired
-    AuthUtil authUtil;
     @Value("${white-ip:0:0:0:0:0:0:0:1, 127.0.0.1, 192.168.1.1}")
     List<String> whiteIpList;
 
@@ -45,12 +35,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .formLogin().disable()
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers(HttpMethod.POST,"/good-words/**").hasAnyRole("OHLOT")
-                        .pathMatchers(HttpMethod.PATCH,"/good-words/**").hasAnyRole("OHLOT")
-                        .pathMatchers(HttpMethod.DELETE,"/good-words/**").hasAnyRole("OHLOT")
                         .pathMatchers("/**").access(this::whiteListIp)
                         .anyExchange().authenticated()
-                ).addFilterAt(new JwtAuthorizationFilter(authService, authUtil), SecurityWebFiltersOrder.HTTP_BASIC);
+                );
         return http.build();
     }
 

@@ -25,25 +25,33 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+#      default-filters:
+#        - name: JwtAuthorization
+#          args:
+#            role: ROLE_MEMBER
       routes:
         - id: ohlot-service
           uri: lb://ohlot-service
           predicates:
             - Path=/good-words/**
-
         - id: member-service
-            uri: lb://member-service
-            predicates:
-              - Path=/members/**
-
+          uri: lb://member-service
+          predicates:
+            - Path=/members/**
+          filters:
+            - name: JwtAuthorization
+              args:
+                roles:
+                  - ROLE_MEMBER
         - id: auth-service
-            uri: lb://auth-service
-            predicates:
-              - Path=/auth/**
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
 
 
-        # components:module:gateway
+# components:module:gateway
 server:
+  port: 8080
   servlet:
     encoding:
       charset: UTF-8
