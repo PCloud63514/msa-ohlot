@@ -1,0 +1,4 @@
+dependencies {
+    implementation(project(':components:module:auth'))
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+}

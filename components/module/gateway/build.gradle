@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(':components:module:auth'))
+    implementation(project(':components:module:auth-store'))
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 

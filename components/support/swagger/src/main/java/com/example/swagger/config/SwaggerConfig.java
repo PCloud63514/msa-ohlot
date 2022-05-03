@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.server.WebSession;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -21,7 +22,14 @@ public class SwaggerConfig {
     @Bean
     public ApiSelectorBuilder selectorBuilder() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .ignoredParameterTypes(HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, ServerHttpRequest.class, ServerHttpResponse.class)
+                .ignoredParameterTypes(
+                        HttpSession.class,
+                        WebSession.class,
+                        HttpServletRequest.class,
+                        HttpServletResponse.class,
+                        ServerHttpRequest.class,
+                        ServerHttpResponse.class
+                )
                 .select();
     }
 

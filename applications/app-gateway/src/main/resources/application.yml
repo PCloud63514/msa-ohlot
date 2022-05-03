@@ -1,3 +1,55 @@
+eureka:
+  instance:
+    instance-id: gateway-microservice-instance
+    appname: gateway-service
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  # components:support:swagger
+  main:
+    allow-bean-definition-overriding: true
+  # components:module:auth-store
+  redis:
+    host: localhost
+    port: 6379
+  session:
+    store-type: redis
+    redis:
+      flush-mode: immediate
+  # spring cloud gateway
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+#      default-filters:
+#        - name: JwtAuthorization
+#          args:
+#            role: ROLE_MEMBER
+      routes:
+        - id: ohlot-service
+          uri: lb://ohlot-service
+          predicates:
+            - Path=/good-words/**
+        - id: member-service
+          uri: lb://member-service
+          predicates:
+            - Path=/members/**
+          filters:
+            - name: JwtAuthorization
+              args:
+                roles:
+                  - ROLE_MEMBER
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
+
+# components:module:gateway
 server:
   port: 8080
   servlet:
@@ -11,35 +63,13 @@ server:
         name: SID
         http-only: true # js 조회 안됨
         secure: true # https
-eureka:
-  instance:
-    instance-id: gateway-microservice-instance
-    appname: gateway-service
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
 
-spring:
-  application:
-    name: gateway-service
-  redis:
-    host: localhost
-    port: 6379
-  main:
-    allow-bean-definition-overriding: true
-  profiles:
-    active: local
-  cloud:
-    gateway:
-      routes:
-        - id: ohlot-service
-          uri: lb://ohlot-service
-          predicates:
-            - Path=/good-words/**
-
-
+# components:support:token
 support:
   jwt:
     secret-key: secretKey
+
+# components:module:auth-store
+filter:
+  exclude-list:
+    - /auth/**

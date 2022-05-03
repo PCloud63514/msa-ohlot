@@ -1,0 +1,12 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  profiles:
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+
+support:
+  jwt:
+    secret-key: secretKey
