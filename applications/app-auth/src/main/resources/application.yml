@@ -23,3 +23,6 @@ support:
 filter:
   exclude-list:
     - /auth/**
+    - /swagger-ui/**
+    - /swagger-*
+    - /v2/api-docs

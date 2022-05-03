@@ -39,7 +39,7 @@ public class SessionFilter implements WebFilter {
         if (basePattern.matches(request.getPath().pathWithinApplication()) &&
                 excludePatterns.stream().noneMatch(pathPattern -> pathPattern.matches(request.getPath().pathWithinApplication()))) {
             return exchange.getSession()
-                    .doOnNext(webSession -> Optional.ofNullable(webSession.getAttribute("user"))
+                    .doOnNext(webSession -> Optional.ofNullable(webSession.getAttribute("crypt"))
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not found session."))
                     ).then(chain.filter(exchange));
         }

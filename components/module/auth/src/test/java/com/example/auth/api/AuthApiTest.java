@@ -1,7 +1,6 @@
 package com.example.auth.api;
 
 import com.example.auth.service.SpyAuthService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -40,16 +39,8 @@ class AuthApiTest {
         webTestClient.get()
                 .uri("/auth/crypt")
                 .exchange()
+                .expectHeader().exists("X-AUTH-TOKEN")
                 .expectBody()
                 .jsonPath("$.crypt").isEqualTo("crypt");
-    }
-
-    @Test
-    void generateCrypt_passesWebSessionToAuthService() throws Exception {
-        webTestClient.get()
-                .uri("/auth/crypt")
-                .exchange();
-
-        Assertions.assertThat(spyAuthService.generateCrypt_argument).isNotNull();
     }
 }

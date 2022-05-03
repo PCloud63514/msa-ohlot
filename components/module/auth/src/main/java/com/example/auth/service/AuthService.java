@@ -7,7 +7,7 @@ public interface AuthService {
     /**
      * HKey 발급
      */
-    CryptGenerateResponse generateCrypt(WebSession session);
+    CryptGenerateResponse generateCrypt();
 
     /**
      * 인증
