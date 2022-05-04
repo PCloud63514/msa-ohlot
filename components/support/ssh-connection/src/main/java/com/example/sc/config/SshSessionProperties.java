@@ -1,4 +1,4 @@
-package com.dreamsecurity.sc.config;
+package com.example.sc.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

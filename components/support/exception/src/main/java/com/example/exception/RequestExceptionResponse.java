@@ -1,4 +1,4 @@
-package com.dreamsecurity.exception;
+package com.example.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

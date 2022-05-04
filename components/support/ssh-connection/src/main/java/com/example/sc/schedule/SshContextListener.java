@@ -1,8 +1,8 @@
-package com.dreamsecurity.sc.schedule;
+package com.example.sc.schedule;
 
-import com.dreamsecurity.sc.SshConnection;
-import com.dreamsecurity.sc.config.SshSessionProperties;
-import com.dreamsecurity.sc.config.SshSessionProperty;
+import com.example.sc.SshConnection;
+import com.example.sc.config.SshSessionProperties;
+import com.example.sc.config.SshSessionProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 

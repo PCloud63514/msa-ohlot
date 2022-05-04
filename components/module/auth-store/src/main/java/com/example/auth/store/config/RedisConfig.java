@@ -48,8 +48,8 @@ public class RedisConfig {
     public RedisTemplate<String, Object> redisTemplate(@Autowired ObjectMapper objectMapper) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper));
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper));
 
         return redisTemplate;
     }
@@ -57,8 +57,8 @@ public class RedisConfig {
     @Bean
     public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate(@Autowired ObjectMapper objectMapper) {
         RedisSerializationContext<String, Object> context = RedisSerializationContext.<String, Object>newSerializationContext(new StringRedisSerializer())
-                .hashKey(new StringRedisSerializer())
-                .hashValue(new GenericJackson2JsonRedisSerializer(objectMapper))
+//                .hashKey(new StringRedisSerializer())
+//                .hashValue(new GenericJackson2JsonRedisSerializer(objectMapper))
                 .build();
 
         return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory(), context);

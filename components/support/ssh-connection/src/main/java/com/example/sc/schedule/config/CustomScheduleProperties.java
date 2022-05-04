@@ -1,4 +1,4 @@
-package com.dreamsecurity.sc.schedule.config;
+package com.example.sc.schedule.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

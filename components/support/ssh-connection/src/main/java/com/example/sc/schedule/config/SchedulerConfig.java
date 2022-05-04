@@ -1,6 +1,6 @@
-package com.dreamsecurity.sc.schedule.config;
+package com.example.sc.schedule.config;
 
-import com.dreamsecurity.sc.schedule.SshKeepAliveJobBean;
+import com.example.sc.schedule.SshKeepAliveJobBean;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.quartz.CronScheduleBuilder;

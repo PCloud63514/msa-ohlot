@@ -1,4 +1,4 @@
-package com.dreamsecurity.exception;
+package com.example.exception;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

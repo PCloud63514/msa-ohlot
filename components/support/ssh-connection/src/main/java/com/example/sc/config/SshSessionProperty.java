@@ -1,4 +1,4 @@
-package com.dreamsecurity.sc.config;
+package com.example.sc.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

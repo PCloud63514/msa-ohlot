@@ -1,6 +1,6 @@
-package com.dreamsecurity.sc;
+package com.example.sc;
 
-import com.dreamsecurity.sc.config.SshSessionProperty;
+import com.example.sc.config.SshSessionProperty;
 import com.jcraft.jsch.JSchException;
 
 public interface ISshConnection {
