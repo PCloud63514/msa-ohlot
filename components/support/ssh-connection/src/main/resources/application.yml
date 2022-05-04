@@ -1,0 +1,13 @@
+ssh-connection:
+  list:
+    - session-name: mysql
+      connection-host: 10.10.40.101
+      connection-port: 22002
+      host: 127.0.0.1
+      user-name: dream
+      password: dream1004!
+      lport: 13316
+      rport: 3306
+  schedule:
+    ssh-keep-alive: 0 0/3 * * * ?
+    ssh-keep-alive-run: true
