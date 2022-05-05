@@ -1,4 +1,5 @@
 dependencies {
+    implementation(project(':components:support:mapper'))
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.apache.httpcomponents:httpclient'
     implementation "com.fasterxml.jackson.core:jackson-databind"
