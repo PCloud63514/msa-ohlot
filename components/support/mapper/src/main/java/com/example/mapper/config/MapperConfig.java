@@ -3,7 +3,6 @@ package com.example.mapper.config;
 import com.example.mapper.config.module.JsonMapperJava8DateTimeModule;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -36,12 +35,12 @@ public class MapperConfig {
                 .registerModule(new JsonMapperJava8DateTimeModule())
                 .registerModule(new JsonComponentModule())
                 .registerModule(new JavaTimeModule())
-                .registerModule(unQuoteModule)
+//                .registerModule(unQuoteModule)
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false)
-                .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
-                .configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true)
-                .configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true)
+//                .configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false)
+//                .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true) // 용하네 더블쿼터 없애고도 이걸 돌리고 있었어?
+//                .configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true)
+//                .configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
                 .configure(SerializationFeature.INDENT_OUTPUT, true);

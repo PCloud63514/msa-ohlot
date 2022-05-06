@@ -39,4 +39,4 @@ filter:
 # :components:client:member
 client:
   member:
-    url: lb://member-service # http://localhost:8788/members
+    url: http://localhost:8788/members
