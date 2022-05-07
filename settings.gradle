@@ -20,9 +20,9 @@ include ':components:module:auth-store'
 
 // app
 include ':applications:app-ohlot'
+include ':applications:app-member'
 include ':applications:app-discovery'
 include ':applications:app-gateway'
-include ':applications:app-member'
 include ':applications:app-auth'
 
 //client
